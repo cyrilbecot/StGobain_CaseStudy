@@ -6,6 +6,12 @@
 # C extensions
 *.so
 
+# Kate swap files
+*.kate-swp
+
+# Backup files
+*~
+
 # Distribution / packaging
 .Python
 build/
