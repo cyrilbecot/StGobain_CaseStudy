@@ -33,7 +33,8 @@ class DataReader():
     def determine_type(self):
         support_types = {
                 "csv": DataTypes.CSV,
-                "xls": DataTypes.Excel
+                "xls": DataTypes.Excel,
+                "shp": DataTypes.GeoShape
             }
         for t in support_types:
             if t in self.path.lower():
@@ -47,6 +48,10 @@ class DataReader():
             self.dc = pd.read_csv(self.path, encoding=self.encoding, sep=self.sep)
         elif self.dt == DataTypes.Excel:
             self.dc = pd.read_excel(self.path,sheet_name=self.sheet_name,skiprows=self.skiprows)
+        elif self.dt == DataTypes.GeoShape:
+            self.dc = gpd.read_file(self.path)
+        else:
+            exit("DataTypes isn't recognized")
 
     def content(self):
         return self.dc

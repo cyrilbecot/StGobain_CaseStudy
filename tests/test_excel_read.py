@@ -1,6 +1,5 @@
 import pytest
 from data_reader.data_reader import DataReader
-from data_reader.helpers import DataTypes
 
 @pytest.fixture
 def read_test_excel_1():
