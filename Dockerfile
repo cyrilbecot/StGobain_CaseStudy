@@ -9,3 +9,8 @@ RUN mkdir /input_data
 COPY input_data/Referendum.csv /input_data
 COPY input_data/data_downloader.sh /input_data
 RUN chmod +x /input_data/data_downloader.sh ; cd /input_data ; ./data_downloader.sh
+
+RUN mkdir /Work
+
+WORKDIR /Work
+CMD jupyter notebook --ip 0.0.0.0 --allow-root
