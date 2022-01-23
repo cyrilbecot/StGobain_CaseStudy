@@ -18,6 +18,7 @@ class DataReader():
     dt: DataTypes=DataTypes.Void
     dc: pd.DataFrame=pd.DataFrame() # Will contain the actual data
     encoding: str='utf-8'
+    sep: str=';'
 
     def __post_init__(self):
         """This will read in the data, using the proper datatype,
