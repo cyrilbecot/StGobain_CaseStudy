@@ -3,6 +3,8 @@
 *.py[cod]
 *$py.class
 
+*.kate-swp
+
 # C extensions
 *.so
 
