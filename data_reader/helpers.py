@@ -13,7 +13,7 @@ def get_read_fcn(dt: DataTypes):
 
 def locations(which):
     res={
-            'referundum':'/input_data/Referundum.csv',
+            'referendum':'/input_data/Referendum.csv',
             'geodata':'/input_data/GeoShapeCommunes/communes-20220101.shp',
             'recensement':'/input_data/base-cc-evol-struct-pop-2013/base-cc-evol-struct-pop-2013.xls',
             'revenus':'/input_data/filo-revenu-pauvrete-menage-2013/filo-revenu-pauvrete-menage-2013.xls',
