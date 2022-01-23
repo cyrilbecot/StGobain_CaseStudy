@@ -7,10 +7,6 @@ class DataTypes(Enum):
     Excel=2
     CSV=3
 
-def get_read_fcn(dt: DataTypes):
-    if dt == DataTypes.CSV:
-        return pandas.read_csv
-
 def locations(which):
     res={
             'referendum':'/input_data/Referendum.csv',

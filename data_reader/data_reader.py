@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import pandas as pd
 import geopandas as gpd
 
-from data_reader.helpers import DataTypes, get_read_fcn
+from data_reader.helpers import DataTypes
 
 
 @dataclass
@@ -25,12 +25,19 @@ class DataReader():
             potentially detecting it if it wasn't filled"""
 
         if self.dt == DataTypes.Void:
-            if 'csv' in self.path.lower():
-                self.dt = DataTypes.CSV
-            else:
-                exit("DataTypes is Void and cannot be detected")
+            self.determine_type()
 
-        self.dc = get_read_fcn(self.dt)(self.path, encoding=self.encoding, sep=self.sep)
+        self.dc = self.read()
+
+    def determine_type(self):
+        if 'csv' in self.path.lower():
+            self.dt = DataTypes.CSV
+        else:
+            exit("DataTypes is Void and cannot be detected")
+
+    def read(self):
+        if self.dt == DataTypes.CSV:
+            return pd.read_csv(self.path, encoding=self.encoding, sep=self.sep)
 
     def content(self):
         return self.dc
