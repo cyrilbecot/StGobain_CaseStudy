@@ -13,8 +13,8 @@ Sadly the last official import is from 1st January 2022, and former ones aren't 
 It is extracted from OpenStreetData that themselves take it from the Cadastre.
 
 
-* The "recensement", i.e. number of person by age class in each city taken [here](https://www.insee.fr/fr/statistiques/2044751#documentation). It also gives the socio-professional split but *only* for town with more than 2k people.
+* The "recensement", i.e. number of person by age class in each city taken [here](https://www.insee.fr/fr/statistiques/fichier/2044751/base-cc-evol-struct-pop-2013.zip). It also gives the socio-professional split but *only* for town with more than 2k people.
 
-* The distribution of the level of education in each city or departement taken [here](https://www.insee.fr/fr/statistiques/2044751#documentation). The last closest point is 2012. The next one 2017.
+* The distribution of the level of education in each city or departement taken [here](https://www.insee.fr/fr/statistiques/fichier/1893149/pop-16ans-dipl6817.zip). The last closest point is 2012. The next one 2017.
 
 * The distribution of income in each city/departement or region taken from [here](https://www.insee.fr/fr/statistiques/fichier/2388572/filo-revenu-pauvrete-menage-2013.zip). Depending of the number of people in each area, not all observables are available. They are all availables only for regions above 2k people.
