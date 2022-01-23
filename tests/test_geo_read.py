@@ -5,7 +5,7 @@ import geopandas as gpd
 @pytest.fixture
 def read_earth_lowres():
     p=gpd.datasets.get_path("naturalearth_lowres")
-    d=gpd.read_file(p)
+    d=DataReader(p).content()
     yield d
 
 def test_len_earth_lowres(read_earth_lowres):
