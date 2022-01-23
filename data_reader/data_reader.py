@@ -18,10 +18,16 @@ class DataReader():
     dc=None # Will contain the actual data
 
     def __post_init__(self):
-        if not self.dt == DataTypes.Void:
-            self.dc = get_read_fcn(self.dt)(self.path)
-        else:
-            exit("Problem : DataType is Void")
+        """This will read in the data, using the proper datatype,
+            potentially detecting it if it wasn't filled"""
+
+        if self.dt == DataTypes.Void:
+            if 'csv' in self.path.lower():
+                self.dt = DataTypes.CSV
+            else:
+                exit("DataTypes is Void and cannot be detected")
+
+        self.dc = get_read_fcn(self.dt)(self.path)
 
     def content(self):
         return self.dc
