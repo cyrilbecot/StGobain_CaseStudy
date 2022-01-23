@@ -8,10 +8,10 @@ class DataTypes(Enum):
     CSV=3
 
 def get_read_fcn(dt: DataTypes):
-    if dt == DataTypes.Excel:
+    if dt == DataTypes.CSV:
         return pandas.read_csv
 
-def locations():
+def locations(which):
     res={
             'referundum':'/input_data/Referundum.csv',
             'geodata':'/input_data/GeoShapeCommunes/communes-20220101.shp',
@@ -19,4 +19,4 @@ def locations():
             'revenus':'/input_data/filo-revenu-pauvrete-menage-2013/filo-revenu-pauvrete-menage-2013.xls',
             'diplomes':'/input_data/pop-16ans-dipl6817/pop-16ans-dipl6817.xlsx'
         }
-    return res
+    return res[which]
