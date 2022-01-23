@@ -30,7 +30,7 @@ class DataReader():
             else:
                 exit("DataTypes is Void and cannot be detected")
 
-        self.dc = get_read_fcn(self.dt)(self.path, encoding=self.encoding)
+        self.dc = get_read_fcn(self.dt)(self.path, encoding=self.encoding, sep=self.sep)
 
     def content(self):
         return self.dc
