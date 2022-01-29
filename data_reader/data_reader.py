@@ -24,6 +24,7 @@ class DataReader():
     insee_code: tuple=()
     drop_domtom: bool=False
     arrondissement_handling: str="None"
+    force_index=""
 
 
     def __post_init__(self):
@@ -48,6 +49,9 @@ class DataReader():
 
         if not self.arrondissement_handling==None:
             self.handle_arrondissement()
+
+        if self.force_index != "":
+            self.dc.set_index(self.force_index)
 
 
     def handle_arrondissement(self):
