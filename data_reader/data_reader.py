@@ -23,6 +23,7 @@ class DataReader():
     rm_nan: bool=False
     insee_code: tuple=()
     drop_domtom: bool=False
+    arrondissement_handling: str="None"
 
 
     def __post_init__(self):
@@ -44,6 +45,21 @@ class DataReader():
 
         if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
             self.dc.set_index('insee',inplace=True)
+
+        if not self.arrondissement_handling==None:
+            self.handle_arrondissement()
+
+
+    def handle_arrondissement(self):
+        """Remove arrondissements, potentially summing them before hand into one town beforehand"""
+
+        if self.arrondissement_handling=="Merge":
+            pass
+
+        for row in self.dc.index:
+            if any(['Arrondissement' in str(c) for c in self.dc.loc[row]]):
+                self.dc.drop(index=row,inplace=True)
+
 
 
     def insee_code_builder(self,incode):
