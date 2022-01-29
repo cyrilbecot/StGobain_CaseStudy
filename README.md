@@ -8,7 +8,7 @@ In addition to the actual referundum results (by townhall) that are provided by 
 
 It is provided in shapefile format, projection WGS84.
 
-Sadly the last official import is from 1st January 2022, and former ones aren't available...
+Sadly the last official import is from 1st January 2022, and former ones aren't available... This means several hundred towns do not match with the Referendum result's list, corresponding to almost 1 million inhabitants.
 
 It is extracted from OpenStreetData that themselves take it from the Cadastre.
 
