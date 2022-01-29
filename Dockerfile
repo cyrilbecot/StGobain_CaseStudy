@@ -14,5 +14,7 @@ RUN mkdir /Work
 
 RUN pip install openpyxl xlrd
 
+COPY input_data/HelperDataframeDiploma.csv /input_data
+
 WORKDIR /Work
 CMD jupyter notebook --ip 0.0.0.0 --allow-root
