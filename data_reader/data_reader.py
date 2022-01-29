@@ -42,7 +42,8 @@ class DataReader():
         if self.drop_domtom:
             self.rm_domtom()
 
-        self.dc.set_index('insee')
+        if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
+            self.dc.set_index('insee',inplace=True)
 
 
     def insee_code_builder(self,incode):
