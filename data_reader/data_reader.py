@@ -46,6 +46,7 @@ class DataReader():
     def insee_code_builder(self,incode):
         """Will either take two columns to build the INSEE code out of it,
                 or will rename the column that already contains it"""
+
         if len(incode)==2:
             dept,city=incode
 
@@ -54,6 +55,10 @@ class DataReader():
 
             fnc=lambda x: x[dept]+x[city]
             self.dc=self.dc.assign(insee=fnc)
+        elif len(incode)==1:
+            col=incode[0]
+            self.dc[col] = self.dc[col].map(lambda x: str(x).rjust(5,'0'))
+            self.dc.rename(columns={col:'insee'},inplace=True)
 
 
     def rm_domtom(self):
