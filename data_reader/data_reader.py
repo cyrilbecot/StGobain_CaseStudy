@@ -42,6 +42,8 @@ class DataReader():
         if self.drop_domtom:
             self.rm_domtom()
 
+        self.dc.set_index('insee')
+
 
     def insee_code_builder(self,incode):
         """Will either take two columns to build the INSEE code out of it,
