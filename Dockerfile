@@ -12,7 +12,7 @@ RUN chmod +x /input_data/data_downloader.sh ; cd /input_data ; ./data_downloader
 
 RUN mkdir /Work
 
-RUN pip install openpyxl
+RUN pip install openpyxl xlrd
 
 WORKDIR /Work
 CMD jupyter notebook --ip 0.0.0.0 --allow-root
