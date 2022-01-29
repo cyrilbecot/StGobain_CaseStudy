@@ -14,9 +14,40 @@ def locations(which):
             'geodata':'/input_data/GeoShapeCommunes/communes-20220101.shp',
             'recensement':'/input_data/base-cc-evol-struct-pop-2013/base-cc-evol-struct-pop-2013.xls',
             'revenus':'/input_data/filo-revenu-pauvrete-menage-2013/filo-revenu-pauvrete-menage-2013.xls',
-            'diplomes':'/input_data/pop-16ans-dipl6817/pop-16ans-dipl6817.xlsx'
+            'diplomes':'/input_data/pop-16ans-dipl6817/pop-16ans-dipl6817.xlsx',
+            'diploma_helper':'/input_data/HelperDataframeDiploma.csv'
         }
     return res[which]
+
+
+
+def diploma_class():
+    """Converts diploma numbers into the equivalent age at which someone who doesn't double would finish
+    Put 6 for people without diplomas"""
+    res = {
+        0: 6, #No diploma
+        1: 11, #CEP
+        2: 14, #BEPC
+        3: 16, #Bac
+        4: 18,
+        5: 21,
+        6: 24
+    }
+    return res
+
+def mean_diploma(x,helper_df):
+    tot_pop=0.
+    tot_diploma=0.
+
+    diplomas = helper_df.columns
+    for col in diplomas:
+        current_diploma=diploma_class()[helper_df[col]["DIPLÔME"]]
+        current_pop=x[col]
+        tot_pop += current_pop
+        tot_diploma += current_pop*current_diploma
+
+    return tot_diploma/tot_pop
+
 
 def age_class():
     res = {
@@ -27,7 +58,7 @@ def age_class():
         '6074': (60,74),
         '7589': (75,89),
         '90P': (90,90)
-          }
+    }
     return res
 
 def mean_age(x,suffix='P13_POP'):
