@@ -22,6 +22,7 @@ class DataReader():
     skiprows: int=-1
     rm_nan: bool=False
     insee_code: tuple=()
+    drop_domtom: bool=False
 
 
     def __post_init__(self):
@@ -38,6 +39,9 @@ class DataReader():
 
         self.insee_code_builder(self.insee_code)
 
+        if self.drop_domtom:
+            self.rm_domtom()
+
 
     def insee_code_builder(self,incode):
         """Will either take two columns to build the INSEE code out of it,
@@ -50,6 +54,20 @@ class DataReader():
 
             fnc=lambda x: x[dept]+x[city]
             self.dc=self.dc.assign(insee=fnc)
+
+
+    def rm_domtom(self):
+        """Remove all Dom-Toms and french from abroads from the data"""
+        #if not 'insee' in self.dc.columns:
+        #    exit("Need to build INSEE code before removing DomToms")
+
+        m97 = self.dc[self.dc['insee'].str.startswith('97')].index
+        to_rm = m97 if len(m97) else self.dc[self.dc['insee'].str.startswith('Z')].index
+
+        if len(to_rm):
+            self.dc.drop(to_rm,inplace=True)
+
+
 
 
     def determine_type(self):

@@ -10,10 +10,24 @@ def read_test_geo_2column():
     tmp=data.content()
     yield tmp
 
+@pytest.fixture
+def read_test_geo_2column_noDomTom():
+    path="tests/test_data/test_csv_geocode_builder_1.csv"
+    data=DataReader(path=path,insee_code=('code_part1','code_part2'),drop_domtom=True)
+
+    tmp=data.content()
+    yield tmp
 
 
-def test_geo1(read_test_geo_2column):
+
+def test_geo_all(read_test_geo_2column):
     res_series=pandas.Series(['01038','22134','97025'])
-    print(read_test_geo_2column['insee'])
 
     assert (read_test_geo_2column.insee==res_series).all()
+
+
+
+def test_geo_drop_domtom(read_test_geo_2column_noDomTom):
+    res_series=pandas.Series(['01038','22134'])
+
+    assert (read_test_geo_2column_noDomTom.insee==res_series).all()
