@@ -54,7 +54,7 @@ class DataReader():
         """Remove arrondissements, potentially summing them before hand into one town beforehand"""
 
         if self.arrondissement_handling=="Merge":
-            #I will only implement the necessary case, i.e. for reading diplomas
+            #Only implement the necessary case, i.e. for reading diplomas
             ars = self.dc.loc[self.dc["libgeo"].str.contains("Arrondissement")]
             self.dc.loc['75056'] = ars.sum()
             self.dc.loc['75056','libgeo']='Paris'
