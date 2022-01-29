@@ -76,8 +76,6 @@ class DataReader():
             self.dc.drop(to_rm,inplace=True)
 
 
-
-
     def determine_type(self):
         """Determine the file type to chose the reader"""
         support_types = {
@@ -93,9 +91,9 @@ class DataReader():
             exit("DataTypes cannot be detected")
 
 
-    def dropna(self, **kwargs):
+    def dropna(self, inplace):
         """Drop NaNs from the inner dataframe"""
-        tmp=self.dc.dropna(kwargs)
+        tmp=self.dc.dropna(inplace=inplace)
         if not inplace:
             return tmp
 
