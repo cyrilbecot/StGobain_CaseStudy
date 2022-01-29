@@ -13,6 +13,7 @@
 
 # Backup files
 *~
+\#*\#
 
 # Distribution / packaging
 .Python

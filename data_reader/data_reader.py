@@ -20,6 +20,10 @@ class DataReader():
     encoding: str='utf-8'
     sep: str=';'
     skiprows: int=-1
+    rm_nan: bool=False
+    insee_code: tuple=()
+    drop_domtom: bool=False
+
 
     def __post_init__(self):
         """This will read in the data, using the proper datatype,
@@ -30,7 +34,52 @@ class DataReader():
 
         self.read()
 
+        if self.rm_nan:
+            self.dropna(inplace=True)
+
+        self.insee_code_builder(self.insee_code)
+
+        if self.drop_domtom:
+            self.rm_domtom()
+
+        if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
+            self.dc.set_index('insee',inplace=True)
+
+
+    def insee_code_builder(self,incode):
+        """Will either take two columns to build the INSEE code out of it,
+                or will rename the column that already contains it"""
+
+        if len(incode)==2:
+            dept,city=incode
+
+            self.dc[dept] = self.dc[dept].map(lambda x: str(x).rjust(2,'0'))
+            self.dc[city] = self.dc[city].map(lambda x: str(x).rjust(3,'0'))
+
+            fnc=lambda x: x[dept]+x[city]
+            self.dc=self.dc.assign(insee=fnc)
+        elif len(incode)==1:
+            col=incode[0]
+            self.dc[col] = self.dc[col].map(lambda x: str(x).rjust(5,'0'))
+            self.dc.rename(columns={col:'insee'},inplace=True)
+
+
+    def rm_domtom(self):
+        """Remove all Dom-Toms and french from abroads from the data"""
+        #if not 'insee' in self.dc.columns:
+        #    exit("Need to build INSEE code before removing DomToms")
+
+        m97 = self.dc[self.dc['insee'].str.startswith('97')].index
+        to_rm = m97 if len(m97) else self.dc[self.dc['insee'].str.startswith('Z')].index
+
+        if len(to_rm):
+            self.dc.drop(to_rm,inplace=True)
+
+
+
+
     def determine_type(self):
+        """Determine the file type to chose the reader"""
         support_types = {
                 "csv": DataTypes.CSV,
                 "xls": DataTypes.Excel,
@@ -43,7 +92,16 @@ class DataReader():
         else:
             exit("DataTypes cannot be detected")
 
+
+    def dropna(self, **kwargs):
+        """Drop NaNs from the inner dataframe"""
+        tmp=self.dc.dropna(kwargs)
+        if not inplace:
+            return tmp
+
+
     def read(self):
+        """Actually read data"""
         if self.dt == DataTypes.CSV:
             self.dc = pd.read_csv(self.path, encoding=self.encoding, sep=self.sep)
         elif self.dt == DataTypes.Excel:
@@ -52,6 +110,7 @@ class DataReader():
             self.dc = gpd.read_file(self.path)
         else:
             exit("DataTypes isn't recognized")
+
 
     def content(self):
         return self.dc

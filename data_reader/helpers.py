@@ -8,6 +8,7 @@ class DataTypes(Enum):
     CSV=3
 
 def locations(which):
+    """Helper function to locate the different databases I'll look at"""
     res={
             'referendum':'/input_data/Referendum.csv',
             'geodata':'/input_data/GeoShapeCommunes/communes-20220101.shp',
