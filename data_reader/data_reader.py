@@ -23,6 +23,7 @@ class DataReader():
     rm_nan: bool=False
     insee_code: tuple=()
     drop_domtom: bool=False
+    arrondissement_handling: str="None"
 
 
     def __post_init__(self):
@@ -44,6 +45,24 @@ class DataReader():
 
         if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
             self.dc.set_index('insee',inplace=True)
+
+        if not self.arrondissement_handling==None:
+            self.handle_arrondissement()
+
+
+    def handle_arrondissement(self):
+        """Remove arrondissements, potentially summing them before hand into one town beforehand"""
+
+        if self.arrondissement_handling=="Merge":
+            #I will only implement the necessary case, i.e. for reading diplomas
+            ars = self.dc.loc[self.dc["libgeo"].str.contains("Arrondissement")]
+            self.dc.loc['75056'] = ars.sum()
+            self.dc.loc['75056','libgeo']='Paris'
+
+        for row in self.dc.index:
+            if any(['Arrondissement' in str(c) for c in self.dc.loc[row]]):
+                self.dc.drop(index=row,inplace=True)
+
 
 
     def insee_code_builder(self,incode):
@@ -76,8 +95,6 @@ class DataReader():
             self.dc.drop(to_rm,inplace=True)
 
 
-
-
     def determine_type(self):
         """Determine the file type to chose the reader"""
         support_types = {
@@ -93,9 +110,9 @@ class DataReader():
             exit("DataTypes cannot be detected")
 
 
-    def dropna(self, **kwargs):
+    def dropna(self, inplace):
         """Drop NaNs from the inner dataframe"""
-        tmp=self.dc.dropna(kwargs)
+        tmp=self.dc.dropna(inplace=inplace)
         if not inplace:
             return tmp
 
