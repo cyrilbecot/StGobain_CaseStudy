@@ -20,6 +20,9 @@ class DataReader():
     encoding: str='utf-8'
     sep: str=';'
     skiprows: int=-1
+    rm_nan: bool=False
+    insee_code: tuple=()
+
 
     def __post_init__(self):
         """This will read in the data, using the proper datatype,
@@ -30,7 +33,27 @@ class DataReader():
 
         self.read()
 
+        if self.rm_nan:
+            self.dropna(inplace=True)
+
+        self.insee_code_builder(self.insee_code)
+
+
+    def insee_code_builder(self,incode):
+        """Will either take two columns to build the INSEE code out of it,
+                or will rename the column that already contains it"""
+        if len(incode)==2:
+            dept,city=incode
+
+            self.dc[dept] = self.dc[dept].map(lambda x: str(x).rjust(2,'0'))
+            self.dc[city] = self.dc[city].map(lambda x: str(x).rjust(3,'0'))
+
+            fnc=lambda x: x[dept]+x[city]
+            self.dc=self.dc.assign(insee=fnc)
+
+
     def determine_type(self):
+        """Determine the file type to chose the reader"""
         support_types = {
                 "csv": DataTypes.CSV,
                 "xls": DataTypes.Excel,
@@ -43,7 +66,16 @@ class DataReader():
         else:
             exit("DataTypes cannot be detected")
 
+
+    def dropna(self, **kwargs):
+        """Drop NaNs from the inner dataframe"""
+        tmp=self.dc.dropna(kwargs)
+        if not inplace:
+            return tmp
+
+
     def read(self):
+        """Actually read data"""
         if self.dt == DataTypes.CSV:
             self.dc = pd.read_csv(self.path, encoding=self.encoding, sep=self.sep)
         elif self.dt == DataTypes.Excel:
@@ -52,6 +84,7 @@ class DataReader():
             self.dc = gpd.read_file(self.path)
         else:
             exit("DataTypes isn't recognized")
+
 
     def content(self):
         return self.dc
