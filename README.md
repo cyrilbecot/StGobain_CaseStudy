@@ -18,3 +18,7 @@ It is extracted from OpenStreetData that themselves take it from the Cadastre.
 * The distribution of the level of education in each city or departement taken [here](https://www.insee.fr/fr/statistiques/fichier/1893149/pop-16ans-dipl6817.zip). The last closest point is 2012. The next one 2017.
 
 * The distribution of income in each city/departement or region taken from [here](https://www.insee.fr/fr/statistiques/fichier/2388572/filo-revenu-pauvrete-menage-2013.zip). Depending of the number of people in each area, not all observables are available. They are all availables only for regions above 2k people.
+
+# Requirements
+
+This only requires a working installation of Docker. The script `cmd_jupyter_in_docker.sh` gives the required commands to start the service and create the jupyter notebook server within the container. The Jupyter disclaimer will give the URL to connect to to run the notebooks.
