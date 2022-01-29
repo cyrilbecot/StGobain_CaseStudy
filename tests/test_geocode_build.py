@@ -31,18 +31,18 @@ def read_test_geo_2column_noDomTom():
 def test_geo_all(read_test_geo_2column):
     res_series=pandas.Series(['01038','22134','97025'])
 
-    assert (read_test_geo_2column.insee==res_series).all()
+    assert (read_test_geo_2column.index==res_series).all()
 
 
 
 def test_geo_drop_domtom(read_test_geo_2column_noDomTom):
     res_series=pandas.Series(['01038','22134'])
 
-    assert (read_test_geo_2column_noDomTom.insee==res_series).all()
+    assert (read_test_geo_2column_noDomTom.index==res_series).all()
 
 
 
 def test_geo_1col(read_test_geo_1column):
     res_series=pandas.Series(['01038','22134','97025'])
 
-    assert (read_test_geo_1column.insee==res_series).all()
+    assert (read_test_geo_1column.index==res_series).all()
