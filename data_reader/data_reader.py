@@ -24,6 +24,7 @@ class DataReader():
     insee_code: tuple=()
     drop_domtom: bool=False
     arrondissement_handling: str="None"
+    force_index: str=""
 
 
     def __post_init__(self):
@@ -46,8 +47,11 @@ class DataReader():
         if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
             self.dc.set_index('insee',inplace=True)
 
-        if not self.arrondissement_handling==None:
+        if not self.arrondissement_handling=="None":
             self.handle_arrondissement()
+
+        if self.force_index != "":
+            self.dc.set_index(self.force_index,inplace=True)
 
 
     def handle_arrondissement(self):
