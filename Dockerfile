@@ -18,4 +18,4 @@ COPY input_data/HelperDataframeDiploma.csv /input_data
 RUN pip install jupyterlab statsmodels
 
 WORKDIR /Work
-CMD jupyter lab --ip 0.0.0.0 --allow-root
+CMD jupyter lab --ip 0.0.0.0 --allow-root --NotebookApp.iopub_data_rate_limit=1.0e10
