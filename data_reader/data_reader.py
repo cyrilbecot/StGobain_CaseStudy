@@ -47,7 +47,7 @@ class DataReader():
         if 'insee' in self.dc.columns: # Necessary to not have to rewrite unit tests
             self.dc.set_index('insee',inplace=True)
 
-        if not self.arrondissement_handling==None:
+        if not self.arrondissement_handling=="None":
             self.handle_arrondissement()
 
         if self.force_index != "":
