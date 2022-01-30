@@ -49,6 +49,20 @@ def mean_diploma(x,helper_df):
     return tot_diploma/tot_pop
 
 
+def socio_pro_class():
+    res = {
+        'C13_POP15P_CS1': 'Agriculteurs',
+        'C13_POP15P_CS2': 'Artisans/commercants',
+        'C13_POP15P_CS3': 'Cadres',
+        'C13_POP15P_CS4': 'Profs',
+        'C13_POP15P_CS5': 'Employés',
+        'C13_POP15P_CS6': 'Ouvriers',
+        'C13_POP15P_CS7': 'Retraites',
+        'C13_POP15P_CS8': 'Autres'
+    }
+    return res
+
+
 def age_class():
     res = {
         '0014': (0,14),
